@@ -55,6 +55,7 @@ describe('GildedTrosTest', () => {
 
     it('should increase quality value of Backstage passes by 1 if sellIn is above 10', () => {
         itemQualityTest('Backstage passes for Re:Factor', 11, 0, 10, 1);
+        itemQualityTest('Backstage passes for HAXX', 11, 0, 10, 1);
     });
 
     /**
@@ -63,6 +64,7 @@ describe('GildedTrosTest', () => {
      */
     it('should increase quality value of Backstage passes by 2 if sellIn is above 5 and below 10', () => {
         itemQualityTest('Backstage passes for Re:Factor', 6, 0, 5, 2);
+        itemQualityTest('Backstage passes for HAXX', 6, 0, 5, 2);
     });
 
     /**
@@ -70,6 +72,7 @@ describe('GildedTrosTest', () => {
      */    
     it('should increase quality value of Backstage passes by 3 if sellIn is above 0 and below 5', () => {
         itemQualityTest('Backstage passes for Re:Factor', 1, 0, 0, 3);
+        itemQualityTest('Backstage passes for HAXX', 1, 0, 0, 3);
     });
 
     /**
@@ -77,5 +80,15 @@ describe('GildedTrosTest', () => {
      */     
     it('should set quality value of Backstage passes to 0 if sellIn is below 0', () => {
         itemQualityTest('Backstage passes for Re:Factor', 0, 10, -1, 0);
+        itemQualityTest('Backstage passes for HAXX', 0, 10, -1, 0);
+    });
+     
+    it('should decrease quality value of smelly items twice as fast as regular items', () => {
+        itemQualityTest('Duplicate Code', 1, 2, 0, 0);
+        itemQualityTest('Long Methods', 1, 2, 0, 0);
+        itemQualityTest('Ugly Variable Names', 1, 2, 0, 0);
+        itemQualityTest('Duplicate Code', 0, 4, -1, 0);
+        itemQualityTest('Long Methods', 0, 4, -1, 0);
+        itemQualityTest('Ugly Variable Names', 0, 4, -1, 0);
     });
 });
