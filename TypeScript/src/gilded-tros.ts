@@ -8,55 +8,47 @@ export class GildedTros {
 
     public updateQuality(): void {
         this.items.forEach(item => {
-            if (item.name != 'Good Wine' && item.name != 'Backstage passes for Re:Factor' && item.name != 'Backstage passes for HAXX') {
-                if (item.quality > 0) {
-                    if (item.name != 'B-DAWG Keychain') {
-                        item.quality = item.quality - 1;
-                    }
-                }
-            } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
-
-                    if (item.name == 'Backstage passes for Re:Factor' || item.name == 'Backstage passes for HAXX') {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
-
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (item.name != 'B-DAWG Keychain') {
-                item.sellIn = item.sellIn - 1;
-            }
-
-            if (item.sellIn < 0) {
-                if (item.name != 'Good Wine') {
-                    if (item.name != 'Backstage passes for Re:Factor' && item.name != 'Backstage passes for HAXX') {
-                        if (item.quality > 0) {
-                            if (item.name != 'B-DAWG Keychain') {
-                                item.quality = item.quality - 1;
-                            }
-                        }
+            switch(item.name) {
+                case 'Good Wine':
+                    if (item.sellIn > 0) {
+                        item.quality = capQuality(item.quality + 1);
                     } else {
-                        item.quality = item.quality - item.quality;
+                        item.quality = capQuality(item.quality + 2);
                     }
-                } else {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1;
+                    item.sellIn = item.sellIn - 1;
+                    break;
+                    
+                case 'B-DAWG Keychain':
+                    break;
+
+                case 'Backstage passes for Re:Factor':
+                case 'Backstage passes for HAXX':
+                    if (item.sellIn >= 11) {
+                        item.quality = capQuality(item.quality + 1);
+                    } else if (item.sellIn >=6 && item.sellIn < 11) {
+                        item.quality = capQuality(item.quality + 2);
+                    } else if (item.sellIn > 0 && item.sellIn < 6) {
+                        item.quality = capQuality(item.quality + 3);
+                    } else {
+                        item.quality = 0;
                     }
-                }
+                    item.sellIn = item.sellIn - 1;
+                    break;
+
+                default:
+                    if (item.sellIn > 0) {
+                        item.quality = capQuality(item.quality - 1);
+                    } else {
+                        item.quality = capQuality(item.quality - 2);
+                    }
+                    item.sellIn = item.sellIn - 1;
+                    break;
             }
         });
     }
 
 }
 
+export function capQuality(quality: number): number {
+    return Math.min(Math.max(quality, 0), 50);
+}
