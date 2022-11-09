@@ -35,6 +35,17 @@ export class GildedTros {
                     item.sellIn = item.sellIn - 1;
                     break;
 
+                case 'Duplicate Code' :
+                case 'Long Methods' :
+                case 'Ugly Variable Names':
+                    if (item.sellIn > 0) {
+                        item.quality = capQuality(item.quality - 2);
+                    } else {
+                        item.quality = capQuality(item.quality - 4);
+                    }
+                    item.sellIn = item.sellIn - 1;
+                    break;
+
                 default:
                     if (item.sellIn > 0) {
                         item.quality = capQuality(item.quality - 1);
