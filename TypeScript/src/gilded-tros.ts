@@ -22,6 +22,7 @@ export class GildedTros {
                     break;
                     
                 case 'B-DAWG Keychain':
+                    item.quality = 80;
                     break;
 
                 case 'Backstage passes for Re:Factor':
